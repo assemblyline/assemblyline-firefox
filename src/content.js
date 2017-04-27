@@ -5,18 +5,13 @@ var deployButtonTemplate = require("./deploy_button.hbs");
 var deployStatusTemplate = require("./deploy_status.hbs");
 var deployStatusButtonTemplate = require("./deploy_status_button.hbs");
 var deployStatusMenuTemplate = require("./deploy_status_menu.hbs");
-var repo = document.location.pathname.match(/([^\/]+\/[^\/]+)/)[0]
+var repo = document.location.pathname.match(/([^\/]+\/[^\/]+)/)[0];
+var pageShas = shas();
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (key in changes) {
-      render(changes[key].newValue);
-  }
-})
-
-chrome.runtime.onMessage.addListener(function(message) {
-  if(message === "init") { 
-    shas().each(function(sha) {
-      chrome.storage.local.get([
+browser.runtime.onMessage.addListener(function(message) {
+  if(message === "init") {
+    pageShas.each(function(sha) {
+      browser.storage.local.get([
         repo + '/' + sha + '/' + 'status',
         repo + '/' + sha + '/' + 'deployments',
       ], function(items) {
@@ -24,22 +19,15 @@ chrome.runtime.onMessage.addListener(function(message) {
           render(items[key]);
         }
       });
-    })
-    loadPage();
-    updateActive()
+    });
   }
 })
 
-// Request the backend loads the data for each sha on the page.
-function loadPage() {
-  shas().each(function(sha) { update(sha); })
-}
-
-// Request the backend updates the data for each sha with an active dropdown
-// every second.
+// Request the backend updates the data for each sha with an active dropdown every second.
 function updateActive() {
-  shas().each(function(sha) {
-    if(_.size(shaContainer(repo, sha).getElementsByClassName("active")) > 0) {
+  pageShas.each(function(sha) {
+    var openedDeploymentDialogs = shaContainer(repo, sha).getElementsByClassName("active")
+    if(_.size(openedDeploymentDialogs) > 0) {
       update(sha);
     }
   })
@@ -59,7 +47,7 @@ function shaContainer(repo, sha) {
 }
 
 function update(sha) {
-  chrome.runtime.sendMessage({
+  browser.runtime.sendMessage({
     repo: repo,
     sha: sha,
   })
@@ -79,7 +67,7 @@ function render(commit) {
 }
 
 function renderDeployButton(el, commit) {
-  chrome.storage.local.get({
+  browser.storage.local.get({
     environments: ['staging','production'],
   }, function(config) {
     if (commit.commitStatus === undefined) { return; }

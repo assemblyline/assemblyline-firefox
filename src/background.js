@@ -3,7 +3,7 @@ var client = require('./client');
 
 var urlFilter = {url: [{hostSuffix: 'github.com', urlContains: 'commits'}]};
 
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
   function(commit) {
     if (commit.sha === undefined)  { return; }
     if (commit.repo === undefined) { return; }
@@ -11,12 +11,12 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
-chrome.webNavigation.onHistoryStateUpdated.addListener(function(e) {
-  chrome.tabs.sendMessage(e.tabId, "init");
+browser.webNavigation.onHistoryStateUpdated.addListener(function(e) {
+  browser.tabs.sendMessage(e.tabId, "init");
 }, urlFilter);
 
-chrome.webNavigation.onDOMContentLoaded.addListener(function(e) {
-  chrome.tabs.sendMessage(e.tabId, "init");
+browser.webNavigation.onDOMContentLoaded.addListener(function(e) {
+  browser.tabs.sendMessage(e.tabId, "init");
 }, urlFilter);
 
 function getData(commit) {
@@ -62,5 +62,5 @@ function saveCommit(commit) {
   if (commit.deployments) { key = key + '/' + 'deployments'; }
   var save = {};
   save[key] = commit;
-  chrome.storage.local.set(save);
+  browser.storage.local.set(save);
 }
