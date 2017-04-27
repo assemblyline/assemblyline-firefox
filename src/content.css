@@ -1,0 +1,122 @@
+.dropdown-deploy, .dropdown-deploy-button {
+  display: inline-block;
+}
+
+.dropdown-deploy .dropdown-menu, .dropdown-deploy-button .dropdown-menu {
+  width: 500px;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+  text-align: left;
+}
+
+.dropdown-deploy .dropdown-menu {
+  margin-top: 7px;
+}
+
+.dropdown-deploy-button .dropdown-menu {
+  margin-top: -35px;
+}
+
+.dropdown-deploy {
+  padding: 0.5em 0.5em 0.5em 0em;
+}
+
+.deployments .build-status-icon {
+  width: initial !important;
+}
+
+.deployments .form-group .form-control {
+  width: 365px;
+}
+
+.deployments-header {
+  padding: 1em;
+  background-color: #f9f9f9;
+}
+
+.deployments-header .state-heading {
+  padding-left: 1em;
+  padding-top: 0.3em;
+}
+
+.deployment {
+  padding: 1em;
+  border-collapse: separate;
+  border-top: 1px solid #e5e5e5;
+}
+
+.deployment .timestamp {
+  color: #767676;
+}
+
+.deployment a.logs {
+  float: right;
+}
+
+.deployment ol.status-list {
+  list-style: none;
+  padding: 10px 0 0 0;
+}
+
+.deployment-description {
+  text-align: left;
+  color: #767676;
+  font-size: 12px;
+}
+
+.deployment-description a {
+  font-size: 14px;
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+a.deployer {
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+.deployer-name {
+  font-size: 14px;
+  text-align: left;
+}
+
+.text-inactive {
+  color: lightgrey !important;
+}
+
+div.commit-indicator, .deploy-button, .deployment .deploy-title {
+  display: inline;
+}
+
+.deployment.loading {
+  height: 4px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.deployment.loading:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 4px;
+  background-color: #2980b9;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 30%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+}

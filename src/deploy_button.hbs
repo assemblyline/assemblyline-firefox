@@ -1,0 +1,45 @@
+<div class="dropdown dropdown-deploy-button js-menu-container">
+  <button type="button" class="btn btn-outline tooltipped tooltipped-n js-menu-target" aria-label="Deploy this commit" aria-haspopup="true">
+    {{icon "squirrel"}}
+  </button>
+  <div class="dropdown-menu-content anim-scale-in js-menu-content">
+    <div class="deployments">
+      <div class="dropdown-menu dropdown-menu-w">
+        <div class="deployments-header flex-table">
+          <div class="flex-table-item">
+            {{icon "squirrel" 2}}
+          </div>
+          <h3 class="state-heading flex-table-item-primary">
+            Deploy ({{shortSha}})
+            <br />
+            {{defaultDescription}}
+            <br />
+            <input type="text" class="form-control input-monospace input-sm" value="{{image}}" size="47" readonly>
+          </h3>
+        </div>
+        <div class="deployment loading" style="display:none"> </div>
+        <div class="deployment form flex-table">
+          <dl class="form-group flex-table-item-primary">
+            <dt><label>Description</label></dt>
+            <dd>
+              <input class="form-control deploy-description" type="text" value="{{defaultDescription}}">
+            </dd>
+          </dl>
+          <dl class="form-group flex-table-item">
+            <dt><label>Environment</label></dt>
+            <dd>
+              <select class="form-select deploy-environment">
+                {{#each environments}}
+                  <option value={{this}}>{{this}}</option>
+                {{/each}}
+              </select>
+            </dd>
+          </dl>
+        </div>
+        <div class="deployment form-actions">
+          <button type="button" class="deploy-submit btn btn-primary">Do It!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
